@@ -42,6 +42,34 @@ const autoscroll = () => {
   }
 };
 
+
+let touchstartX = 0
+let touchendX = 0
+
+const slider = document.getElementById('chat_body')
+const sidebar = document.getElementById('sidebar')
+
+const handleGesture = () => {
+  // swiped left
+  if (touchendX < touchstartX) {
+    sidebar.style.display = 'none'
+  }
+
+  // swiped right
+  if (touchendX > touchstartX) {
+    sidebar.style.display = 'block'
+  }
+}
+
+slider.addEventListener('touchstart', e => {
+  touchstartX = e.changedTouches[0].screenX
+})
+
+slider.addEventListener('touchend', e => {
+  touchendX = e.changedTouches[0].screenX
+  handleGesture()
+})
+
 socket.on("message", (message) => {
   console.log(message);
   const html = Mustache.render(messageTemplate, {
@@ -94,7 +122,7 @@ $messageForm.addEventListener("submit", (e) => {
   autoscroll()
 });
 
-$sendLocationButton.addEventListener("click", () => {
+$sendLocationButton && $sendLocationButton.addEventListener("click", () => {
   if (!navigator.geolocation) {
     return alert("Geolocation is not supported by your browser");
   }
