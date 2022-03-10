@@ -51,12 +51,12 @@ const sidebar = document.getElementById('sidebar')
 
 const handleGesture = () => {
   // swiped left
-  if ((touchendX + 20) < touchstartX) {
+  if ((touchendX + 30) < touchstartX) {
     sidebar.style.display = 'none'
   }
 
   // swiped right
-  if (touchendX > (touchstartX + 20)) {
+  if (touchendX > (touchstartX + 30)) {
     sidebar.style.display = 'block'
   }
 }
