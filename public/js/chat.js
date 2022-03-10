@@ -51,12 +51,12 @@ const sidebar = document.getElementById('sidebar')
 
 const handleGesture = () => {
   // swiped left
-  if (touchendX < touchstartX) {
+  if ((touchendX + 20) < touchstartX) {
     sidebar.style.display = 'none'
   }
 
   // swiped right
-  if (touchendX > touchstartX) {
+  if (touchendX > (touchstartX + 20)) {
     sidebar.style.display = 'block'
   }
 }
@@ -71,7 +71,6 @@ slider.addEventListener('touchend', e => {
 })
 
 socket.on("message", (message) => {
-  console.log(message);
   const html = Mustache.render(messageTemplate, {
     username: message.username,
     message: message.text,
@@ -82,7 +81,6 @@ socket.on("message", (message) => {
 });
 
 socket.on("locationMessage", (message) => {
-  console.log(message);
   const html = Mustache.render(locationMessageTemplate, {
     username: message.username,
     url: message.url,
@@ -137,7 +135,6 @@ $sendLocationButton && $sendLocationButton.addEventListener("click", () => {
         longitude: position.coords.longitude,
       },
       () => {
-        console.log("Location shared");
         $sendLocationButton.removeAttribute("disabled");
         $sendLocationButton.focus();
       }
